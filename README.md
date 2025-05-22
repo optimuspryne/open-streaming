@@ -6,7 +6,7 @@ A customizable, full-screen web launcher for your favorite streaming platforms. 
 
 ##  Features
 
-- **modern interface** with support for logos and dynamic layouts  
+- **Modern interface** with support for logos and dynamic layouts  
 - **Preloaded popular services** for easy one-click addition  
 - **Custom service input** for adding any website with a custom label and image  
 - **Drag-and-drop rearrangement** of service tiles  
