@@ -46,8 +46,8 @@ open-streaming/
 1. Use the **"Add a Popular Service"** to select a service.
 2. Then click the **"Add from List"** button to add popular streaming services instantly.
 3. Or, fill in the custom fields to add a new service manually.  For example, a locally hosted JellyFin instance.
-   > Tip: To use local images, place them in the `streamingassets/` folder and reference them like `streamingassets/myservice.png` in the custom image path textbox.  You can also enter a full URL to somewhere like steamgriddb.
-   > The .png assets for JellyFin and Emby are already included so when adding one of these services, leave the image url field blank.
+> Tip: To use local images, place them in the `streamingassets/` folder and reference them like `streamingassets/myservice.png` in the custom image path textbox.  You can also enter a full URL to somewhere like steamgriddb.
+> The .png assets for JellyFin and Emby are already included so when adding one of these services, leave the image url field blank.
 5. Use drag-and-drop to rearrange services as you like.
 6. Click the ❌ button on the top right to delete services.
 7. Use the **Export** / **Import** buttons to save or load layouts in JSON format.
