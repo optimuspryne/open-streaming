@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Streaming</title>
+  <style>
+	body {
+	  margin: 0;
+	  font-family: sans-serif;
+	  background-color: #0133A6;
+	  color: #ffffff;
+	  display: flex;
+	  height: 100vh;
+	  overflow: hidden;
+	}
+
+	.sidebar {
+	  width: 280px;
+	  background-color: #002986;
+	  padding: 1rem;
+	  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
+	  display: flex;
+	  flex-direction: column;
+	  gap: 2rem;
+	  align-items: stretch;
+	}
+
+	.logo {
+	  width: 100%;
+	  max-width: 200px;
+	  align-self: center;
+	}
+
+	.section h3,
+	.section h4 {
+	  text-align: center;
+	  margin-bottom: 0.5rem;
+	  color: #ffffff;
+	}
+
+	.form-control {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 0.5rem;
+	  margin-bottom: 1.5rem;
+	  width: 100%;
+	}
+
+	.form-control label {
+	  font-size: 0.9rem;
+	  color: #cdd8ee;
+	  margin-top: 0.3rem;
+	}
+
+	select,
+	input[type="text"],
+	input[type="url"],
+	button {
+	  background-color: #ededed;
+	  color: #161a45;
+	  border: 1px solid #2a3e6e;
+	  border-radius: 6px;
+	  padding: 0.5rem 0.75rem;
+	  font-size: 1rem;
+	  width: 100%;
+	  box-sizing: border-box;
+	  transition: all 0.2s ease;
+	}
+
+	select:focus,
+	input:focus,
+	button:focus {
+	  outline: none;
+	  border-color: #339dff;
+	  box-shadow: 0 0 0 2px rgba(51, 157, 255, 0.3);
+	}
+
+	button {
+	  background-color: #0285a6;
+	  cursor: pointer;
+	}
+
+	button:hover {
+	  background-color: #0233a6;
+	}
+
+	button:active {
+	  background-color: #172161;
+	}
+
+	.content {
+	  flex: 1;
+	  overflow-y: auto;
+	  padding: 2rem;
+	}
+
+	#home-grid {
+	  display: grid;
+	  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	  gap: 2rem;
+	  max-width: 100%;
+	}
+
+	.service {
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  text-align: center;
+	  background-color: #0285a6;
+	  border-radius: 10px;
+	  overflow: hidden;
+	  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+	  cursor: pointer;
+	  transition: transform 0.2s, box-shadow 0.2s;
+	  position: relative;
+	}
+
+	.service:focus {
+	  outline: 2px solid #339dff;
+	  outline-offset: 4px;
+	}
+
+	.service img {
+	  width: 100%;
+	  height: auto;
+	  aspect-ratio: 2 / 3;
+	  object-fit: cover;
+	}
+
+	.fallback-image {
+	  width: 100%;
+	  aspect-ratio: 2 / 3;
+	  background-color: #20335c;
+	  color: white;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  text-align: center;
+	  font-size: 1.2rem;
+	  font-weight: bold;
+	  padding: 0.5rem;
+	  border-radius: 10px;
+	  box-sizing: border-box;
+	}
+
+	.label {
+	  padding: 0.75rem;
+	  font-size: 1.1rem;
+	  color: #161a45;
+	}
+
+	.delete-btn {
+	  position: absolute;
+	  top: 8px;
+	  right: 8px;
+	  background: #555c66;
+	  color: white;
+	  border: none;
+	  border-radius: 50%;
+	  width: 24px;
+	  height: 24px;
+	  font-weight: bold;
+	  font-size: 16px;
+	  line-height: 1;
+	  text-align: center;
+	  cursor: pointer;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  z-index: 10;
+	  padding: 0;
+	}
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <img src="streamingassets\finallogo.png" alt="Open Streaming Logo" class="logo">
+
+    <div class="section">
+	  <h4>Add A Known/Popular Service</h4>
+
+	  <div class="form-control">
+		<select id="popular-services">
+		  <option value="">-- Select a popular service --</option>
+		</select>
+		<button onclick="addPopularService()">Add from List</button>
+	  </div>
+
+	  <hr style="margin: 1rem 0; width: 100%; border-color: #2a3e6e;">
+      <h4>Add A Custom Service (i.e JellyFin, Emby etc.)</h4>
+	  <div class="form-control">
+		<label for="new-name">Name</label>
+		<input id="new-name" type="text" placeholder="Custom Service Name">
+
+		<label for="new-url">URL</label>
+		<input id="new-url" type="url" placeholder="Custom Service URL">
+
+		<label for="new-img">Image Path</label>
+		<input id="new-img" type="text" placeholder="e.g. https://cdn2.steamgriddb.com/grid/...jpg">
+
+		<button onclick="addService()">Add Custom</button>
+	  </div>
+
+	  <hr style="margin: 1rem 0; width: 100%; border-color: #2a3e6e;">
+
+	  <div class="form-control">
+		<h4 style="margin: 0;">Export Your Current Layout Or Import A Backup</h4>
+		<button onclick="exportLayout()">Export Layout</button>
+		<input type="file" id="importFile" style="display:none;" onchange="importLayout(event)">
+		<button onclick="document.getElementById('importFile').click()">Import Layout</button>
+	  </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div id="home-grid"></div>
+  </div>
+  
+<script>
+	const container = document.querySelector("#home-grid");
+	let services = [];
+	let currentIndex = 0;
+	let draggedEl = null;
+	const layoutKey = "streamingLayout";
+	
+	const popularServices = [
+	  { name: "Apple TV+", url: "https://tv.apple.com/", img: "streamingassets/appletvplus.png" },
+	  { name: "CrunchyRoll", url: "https://www.crunchyroll.com/", img: "streamingassets/crunchyroll.png" },
+	  { name: "Discovery+", url: "https://www.discoveryplus.com/", img: "streamingassets/discoveryplus.png" },
+	  { name: "DisneyPlus", url: "https://www.disneyplus.com/", img: "streamingassets/disneyplus.png" },
+	  { name: "Dropout", url: "https://signup.dropout.tv/", img: "streamingassets/dropout.png" },
+	  { name: "ESPN+", url: "https://www.espn.com/espnplus/", img: "streamingassets/espnplus.png" },
+	  { name: "HBO Max", url: "https://www.max.com/login", img: "streamingassets/hbomax.png" },
+	  { name: "HiDive", url: "https://www.hidive.com/", img: "streamingassets/hidive.png" },
+	  { name: "Hulu", url: "https://www.hulu.com/welcome", img: "streamingassets/hulu.png" },
+	  { name: "Netflix", url: "https://www.netflix.com/", img: "streamingassets/netflix.png" },
+	  { name: "Paramount+", url: "https://www.paramountplus.com/", img: "streamingassets/paramountplus.png" },
+	  { name: "Peacock", url: "https://www.peacocktv.com/", img: "streamingassets/peacock.png" },
+	  { name: "Plex", url: "https://www.plex.tv/", img: "streamingassets/plex.png" },
+	  { name: "Prime Video", url: "https://www.primevideo.com/", img: "streamingassets/primevideo.png" },
+	  { name: "Spotify", url: "https://www.spotify.com/", img: "streamingassets/spotify.png" },
+	  { name: "Youtube", url: "https://youtube.com", img: "streamingassets/youtube.png" },
+	  { name: "Youtube Music", url: "https://music.youtube.com/", img: "streamingassets/youtubemusic.png" },
+	];
+
+	function populatePopularDropdown() {
+	  const select = document.getElementById("popular-services");
+	  popularServices.forEach(service => {
+		const option = document.createElement("option");
+		option.value = service.name;
+		option.textContent = service.name;
+		select.appendChild(option);
+	  });
+	}
+
+	function addPopularService() {
+	  const selectedName = document.getElementById("popular-services").value;
+	  if (!selectedName) return;
+
+	  const service = popularServices.find(s => s.name === selectedName);
+	  if (!service) return;
+
+	  const id = service.name.toLowerCase().replace(/\s+/g, "-");
+	  const div = document.createElement("div");
+	  div.className = "service";
+	  div.setAttribute("tabindex", "0");
+	  div.setAttribute("draggable", "true");
+	  div.setAttribute("data-id", id);
+	  div.setAttribute("data-url", service.url);
+	  div.innerHTML = `
+		<button class="delete-btn" onclick="deleteService('${id}')">×</button>
+		<img src="${service.img}" alt="${service.name}" />
+		<div class="label">${service.name}</div>
+	  `;
+
+	  container.appendChild(div);
+	  persistCustomServices();
+	  refreshServices();
+	}
+
+	function openService(url) {
+	  window.location.href = url;
+	}
+
+	function saveLayout() {
+	  const ids = Array.from(container.querySelectorAll(".service")).map(el => el.dataset.id);
+	  localStorage.setItem(layoutKey, JSON.stringify(ids));
+	}
+
+	function persistCustomServices() {
+	  const allServices = Array.from(container.querySelectorAll(".service")).map(el => ({
+		id: el.dataset.id,
+		url: el.dataset.url,
+		img: el.querySelector("img").getAttribute("src"),
+		label: el.querySelector(".label").innerText
+	  }));
+	  localStorage.setItem("customServices", JSON.stringify(allServices));
+	}
+
+	function loadCustomServices() {
+	  const saved = localStorage.getItem("customServices");
+	  if (!saved) return;
+	  const list = JSON.parse(saved);
+	  container.innerHTML = "";
+	  list.forEach(item => {
+		const div = document.createElement("div");
+		div.className = "service";
+		div.setAttribute("tabindex", "0");
+		div.setAttribute("draggable", "true");
+		div.setAttribute("data-id", item.id);
+		div.setAttribute("data-url", item.url);
+		div.innerHTML = `
+		  <button class="delete-btn" onclick="deleteService('${item.id}')">×</button>
+		  <img src="${item.img}" alt="${item.label}" />
+		  <div class="label">${item.label}</div>
+		`;
+		container.appendChild(div);
+	  });
+	}
+
+	function addService() {
+	  const name = document.getElementById("new-name").value.trim();
+	  const url = document.getElementById("new-url").value.trim();
+	  let img = document.getElementById("new-img").value.trim();
+	  if (!name || !url) return;
+	  
+	  const id = name.toLowerCase().replace(/\s+/g, "-");
+
+	  if (!img) {
+		const lower = name.toLowerCase();
+		if (lower.includes("emby")) {
+		  img = "streamingassets/emby.png";
+		} else if (lower.includes("jellyfin")) {
+		  img = "streamingassets/jellyfin.png";
+		}
+	  }
+	  
+	  const div = document.createElement("div");
+	  div.className = "service";
+	  div.setAttribute("tabindex", "0");
+	  div.setAttribute("draggable", "true");
+	  div.setAttribute("data-id", id);
+	  div.setAttribute("data-url", url);
+	  
+	  let imageHTML = img
+	    ? `<img src="${img}" alt="${name}" />`
+	    : `<div class="fallback-image">${name}</div>`;
+
+	  div.innerHTML = `
+	    <button class="delete-btn" onclick="deleteService('${id}')">×</button>
+	    ${imageHTML}
+	    <div class="label">${name}</div>
+	  `;
+	  
+	  container.appendChild(div);
+	  persistCustomServices();
+	  refreshServices();
+	}
+
+	function deleteService(id) {
+	  const el = container.querySelector(`[data-id="${id}"]`);
+	  if (el) el.remove();
+	  persistCustomServices();
+	  refreshServices();
+	}
+
+	function refreshServices() {
+	  services = Array.from(document.querySelectorAll(".service"));
+
+	  services.forEach(service => {
+		const clone = service.cloneNode(true);
+		clone.classList = service.classList;
+		container.replaceChild(clone, service);
+	  });
+
+	  services = Array.from(document.querySelectorAll(".service"));
+
+	  services.forEach((service, i) => {
+		service.setAttribute("tabindex", "0");
+
+		// Add delete button if missing
+		if (!service.querySelector(".delete-btn")) {
+		  const id = service.dataset.id;
+		  const deleteBtn = document.createElement("button");
+		  deleteBtn.textContent = "×";
+		  deleteBtn.className = "delete-btn";
+		  deleteBtn.onclick = (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+			container.removeChild(service);
+			persistCustomServices();
+			refreshServices();
+		  };
+		  service.appendChild(deleteBtn);
+		}
+
+		service.addEventListener("dragstart", (e) => {
+		  draggedEl = service;
+		  service.classList.add("dragging");
+
+		  const dragGhost = service.cloneNode(true);
+		  dragGhost.style.position = "absolute";
+		  dragGhost.style.top = "-9999px";
+		  dragGhost.style.opacity = "0.7";
+		  dragGhost.style.width = "100px";
+		  dragGhost.style.pointerEvents = "none";
+		  document.body.appendChild(dragGhost);
+		  e.dataTransfer.setDragImage(dragGhost, 50, 50);
+		  setTimeout(() => document.body.removeChild(dragGhost), 0);
+		});
+
+		service.addEventListener("dragend", () => {
+		  draggedEl = null;
+		  service.classList.remove("dragging");
+		  saveLayout();
+		  refreshServices();
+		});
+
+		service.addEventListener("dragover", (e) => e.preventDefault());
+
+		service.addEventListener("drop", (e) => {
+		  e.preventDefault();
+		  if (!draggedEl || draggedEl === service) return;
+
+		  const children = Array.from(container.children);
+		  const draggedIndex = children.indexOf(draggedEl);
+		  const targetIndex = children.indexOf(service);
+
+		  if (draggedIndex < targetIndex) {
+			container.insertBefore(draggedEl, service.nextSibling);
+		  } else {
+			container.insertBefore(draggedEl, service);
+		  }
+
+		  persistCustomServices();
+		  refreshServices();
+		});
+
+		service.addEventListener("click", (e) => {
+		  if (e.target.classList.contains("delete-btn")) return;
+		  openService(service.dataset.url);
+		});
+	  });
+	}
+
+	function exportLayout() {
+	  const layout = {
+		layoutOrder: Array.from(container.querySelectorAll(".service")).map(el => el.dataset.id),
+		services: Array.from(container.querySelectorAll(".service")).map(el => ({
+		  id: el.dataset.id,
+		  url: el.dataset.url,
+		  img: el.querySelector("img").src,
+		  label: el.querySelector(".label").innerText
+		}))
+	   };
+
+	  const blob = new Blob([JSON.stringify(layout, null, 2)], { type: "application/json" });
+	  const url = URL.createObjectURL(blob);
+	  const a = document.createElement("a");
+	  a.href = url;
+	  a.download = "streaming-layout.json";
+	  a.click();
+	  URL.revokeObjectURL(url);
+	}
+
+	function importLayout(event) {
+	  const file = event.target.files[0];
+	  if (!file) return;
+
+	  const reader = new FileReader();
+	  reader.onload = function(e) {
+		try {
+		  const data = JSON.parse(e.target.result);
+
+		  if (!Array.isArray(data.services)) {
+			alert("Invalid layout file.");
+			return;
+		  }
+
+		  // Save imported data to localStorage
+		  localStorage.setItem("customServices", JSON.stringify(data.services));
+		  localStorage.setItem("streamingLayout", JSON.stringify(data.layoutOrder));
+
+		  loadCustomServices();
+		  refreshServices();
+		} catch (err) {
+		  alert("Failed to load layout: " + err.message);
+		}
+	  };
+
+	  reader.readAsText(file);
+	}
+
+	document.addEventListener("keydown", (event) => {
+	  const tag = event.target.tagName.toLowerCase();
+	  if (tag === "input" || tag === "textarea" || tag === "button") {
+	  return;
+	  }
+	  if (!services.length) return;
+	  const total = services.length;
+	  const currentRect = services[currentIndex].getBoundingClientRect();
+
+	  if (event.key === "ArrowRight" && currentIndex + 1 < total) {
+		currentIndex++;
+	  } else if (event.key === "ArrowLeft" && currentIndex > 0) {
+		currentIndex--;
+	  } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+		let bestMatch = null;
+		let minDistance = Infinity;
+		const goingDown = event.key === "ArrowDown";
+
+		for (let i = 0; i < services.length; i++) {
+		  if (i === currentIndex) continue;
+		  const rect = services[i].getBoundingClientRect();
+		  const isBelow = goingDown && rect.top > currentRect.top + 10;
+		  const isAbove = !goingDown && rect.top < currentRect.top - 10;
+
+		  if ((goingDown && isBelow) || (!goingDown && isAbove)) {
+			const horizontalDist = Math.abs(rect.left - currentRect.left);
+			const verticalDist = Math.abs(rect.top - currentRect.top);
+			const totalDist = horizontalDist + verticalDist;
+
+			if (totalDist < minDistance) {
+			  minDistance = totalDist;
+			  bestMatch = i;
+			}
+		  }
+		}
+
+		if (bestMatch !== null) {
+		  const wasBelow = services[currentIndex].getBoundingClientRect().top > 300;
+		  currentIndex = bestMatch;
+
+		  if (!goingDown && wasBelow) {
+			window.scrollTo({ top: 0, behavior: "smooth" });
+		  }
+		}
+	  } else if (event.key === "Enter") {
+		const url = services[currentIndex].dataset.url;
+		openService(url);
+		return;
+	  }
+
+	  services[currentIndex].focus();
+	  services[currentIndex].scrollIntoView({
+		behavior: "smooth",
+		block: "center",
+		inline: "center"
+	  });
+	});
+
+	window.addEventListener("load", () => {
+	  loadCustomServices();
+	  saveLayout();
+	  refreshServices();
+	  if (services[0]) services[0].focus();
+	});
+	
+	populatePopularDropdown();
+</script>
+</body>
+</html>
