@@ -34,11 +34,11 @@ open-streaming/
 ## How I Use/Setup The Webpage For Use On A HTPC
 
 1. I host the site on a local webserver I maintain, just make sure the streamingassets folder is in the same directory as openstreaming.html
-2. I setup a Windows 11 PC (Using Tiny11 as the base OS) on a MicroPC to use as my HomeTheatre PC.  I setup 'Auto-Logon', then I installed Brave Browser and changed the HomePage and NewTab page to my hosted URL.
-  > I chose Windows 11 because I couldn't find a Linux Distro that could reliably access and play the content on various streaming platforms, but feel free to tinker with other distros, maybe you'll have better luck than me. 
+2. I setup a Windows 11 PC (Using Tiny11 as the base OS) on a MicroPC to use as my HomeTheatre PC.  I setup 'Auto-Logon', then I installed Brave Browser and changed the HomePage and NewTab page to my hosted URL. For some more optional fun, I even downloaded some old school Windows screensavers and set that up in Windows, 3D Maze FTW.
+> I chose Windows 11 because I couldn't find a Linux Distro that could reliably access and play the content on various streaming platforms, but feel free to tinker with other distros, maybe you'll have better luck than me. 
 3. I modified the Registry to launch Brave Browser in Kiosk mode (A quick internet search will get you the steps for this) to save some resources that explorer.exe would typically use.  If you don't want to modify the registry you can always just create a simple Powershell or Batch script to run Brave in Kiosk mode during startup.  I'm not going to go into details on how to accomplish this.
 4. I purchased a wireless remote/keyboard combo (Rii Mini K25) that connects to the PC via USB Dongle.  The website should function with almost any IR/Wireless remote or even just a keyboard/mouse.  Some of the streaming sites aren't optimized for using a remote so purchasing one that has the abilitly to simulate a mouse cursor is a must.
-5. Now when I boot the HTPC is immediately logs in, starts Brave in Kiosk mode and opens the openstreaming webpage by default.  I can press the 'home' button on the remote to go back to openstreaming at anytime.
+5. Now when I boot the HTPC it immediately logs in, starts Brave in Kiosk mode and opens the openstreaming webpage by default.  I can press the 'home' button on the remote to go back to openstreaming at anytime.
 
 
 ## How To Use WebPage Itself
