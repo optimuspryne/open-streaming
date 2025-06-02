@@ -2,7 +2,7 @@
 
 A customizable, full-screen web launcher for your favorite streaming platforms. It presents user-friendly grid interface where you can organize, launch, and manage services like Netflix, Hulu, YouTube, Plex, and more.
 
-** A Demo is available here: https://optimuspryne.github.io/open-streaming/ **
+**A Demo is available here: https://optimuspryne.github.io/open-streaming/**
 ---
 
 ## Folder Structure
