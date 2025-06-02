@@ -4,18 +4,6 @@ A customizable, full-screen web launcher for your favorite streaming platforms. 
 
 ---
 
-##  Features
-
-- **Modern interface** with support for logos and dynamic layouts  
-- **Preloaded popular services** for easy one-click addition  
-- **Custom service input** for adding any website with a custom label and image  
-- **Drag-and-drop rearrangement** of service tiles  
-- **One-click deletion** of unwanted services  
-- **Export/Import layout** as JSON files to back up or transfer your setup  
-- **Mouse + IR remote/keyboard navigation** support
-  
----
-
 ## Folder Structure
 
 ```
