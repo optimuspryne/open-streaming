@@ -28,7 +28,7 @@ open-streaming/
    - git
    - nano
    - chromium
-   - xscreensaver.
+   - xscreensaver
 4. I configured/changed Chromium's homepage, new tab page and default startup page to web address where I'm hosting the html file.
 5. I added the following command to startup: chromium --start-fullscreen (chromium --kiosk is an alternative option).  This was done via the LXQt session settings GUI.
 6. I enabled autologin for the htpc user, you can do this by editing the lightdm config file at /etc/lightdm/lightdm.conf.  (Step will differ if you choose a different DM, DE or OS)
