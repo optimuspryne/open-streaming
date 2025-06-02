@@ -9,7 +9,7 @@ A customizable, full-screen web launcher for your favorite streaming platforms. 
 
 ```
 open-streaming/
-├── openstreaming.html         # Main launcher HTML file
+├── open-streaming.html         # Main launcher HTML file
 ├── streamingassets/           # Folder for local service images
 │   ├── netflix.png
 │   ├── hulu.png
