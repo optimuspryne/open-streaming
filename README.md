@@ -23,7 +23,7 @@ open-streaming/
 
 > I purchased a wireless remote/keyboard combo (Rii Mini K25) that connects to the PC via USB Dongle.  The openstreaming site should function with almost any wireless remote that emulates keyboard arrow keys for it's directional buttons but most of the big streaming sites aren't programmed to work with nicely with arrow keys, so purchasing a remote that has the ability to emulate a mouse cursor is a must.
 
-1. I host the html file on a local webserver I maintain, just make sure the streamingassets folder is in the same directory as openstreaming.html file.
+1. I host the html file on a local webserver I maintain, just make sure the streamingassets folder is in the same directory as open-streaming.html file.
 2. I have a mini-PC that I installed Arch Linux on.  I'm using LXQt as the desktop environment and LightDM as the display manager.  I installed the following packages:
    - git
    - nano
