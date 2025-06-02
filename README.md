@@ -34,8 +34,8 @@ open-streaming/
 6. I enabled autologin for the htpc user, you can do this by editing the lightdm config file at /etc/lightdm/lightdm.conf.  (Step will differ if you choose a different DM, DE or OS)
    - Find the section labeled **[Seat:*]** and uncomment this line **'autologin-user=your_username'** and replace **your_username** with the name of your user.
 7. I needed to add this user to the 'autologin' group, so I ran these two commands:
-   - sudo groupadd -f autologin
-   - sudo gpasswd -a your_username autologin.
+   - sudo groupadd -f autologin (Just incase the autologin group didn't exist already)
+   - sudo gpasswd -a your_username autologin
 5. Now when I boot the HTPC it immediately logs in, starts Chromium fullscreen and opens the openstreaming webpage by default.  I can press the 'home' button on the wireless remote to go back to openstreaming page at anytime.
 > I also setup xscreensaver, it's 100% optional but kind of fun to bring back the nostalgia of screensavers.
 
