@@ -1,5 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+	const sb = document.querySelector('.sidebar');
+	if (sb) {
+		sb.style.maxHeight = '100vh';
+		sb.style.overflow = 'auto';
+		sb.style.WebkitOverflowScrolling = 'touch';
+	}
+});
+(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+		const sidebar = document.querySelector('.sidebar');
+		const content = document.querySelector('.content');
+		if (!sidebar) return;
+
+		// Ensure sidebar is overlayed and hidden by default
+		const sidebarWidth = sidebar.getBoundingClientRect().width || 280;
+		Object.assign(sidebar.style, {
+			position: 'fixed',
+			left: '0',
+			top: '0',
+			height: '100vh',
+			transform: `translateX(-${sidebarWidth}px)`,
+			transition: 'transform 250ms ease',
+			zIndex: '999',
+			boxShadow: '6px 0 12px rgba(0,0,0,0.35)'
+		});
+
+		// create a small visible toggle handle to show the sidebar
+		const toggle = document.createElement('button');
+		toggle.type = 'button';
+		toggle.setAttribute('aria-label','Open sidebar');
+		toggle.innerHTML = '☰';
+		Object.assign(toggle.style, {
+			position: 'fixed',
+			left: '6px',
+			top: '12px',
+			width: '36px',
+			height: '36px',
+			zIndex: '1000',
+			borderRadius: '6px',
+			border: 'none',
+			background: 'rgba(255,255,255,0.08)',
+			color: '#fff',
+			cursor: 'pointer',
+			backdropFilter: 'blur(4px)'
+		});
+		document.body.appendChild(toggle);
+
+		let open = false;
+		function showSidebar(){
+			sidebar.style.transform = 'translateX(0)';
+			if (content) content.style.marginLeft = `${sidebarWidth}px`;
+			open = true;
+			toggle.setAttribute('aria-label','Close sidebar');
+		}
+		function hideSidebar(){
+			sidebar.style.transform = `translateX(-${sidebarWidth}px)`;
+			if (content) content.style.marginLeft = '0';
+			open = false;
+			toggle.setAttribute('aria-label','Open sidebar');
+		}
+
+		toggle.addEventListener('click', function(e){
+			e.stopPropagation();
+			open ? hideSidebar() : showSidebar();
+		});
+
+		// Close when clicking outside
+		document.addEventListener('click', function(e){
+			if (!open) return;
+			if (!sidebar.contains(e.target) && e.target !== toggle) hideSidebar();
+		}, true);
+
+		// Allow Esc to close
+		document.addEventListener('keydown', function(e){
+			if (e.key === 'Escape' && open) hideSidebar();
+		});
+
+		// If the sidebar already contains controls that should open it when focused/clicked, ensure it becomes visible
+		sidebar.addEventListener('click', function(){ showSidebar(); });
+
+		// ensure layout initial spacing isn't broken on narrow viewports
+		window.addEventListener('resize', function(){
+			const w = sidebar.getBoundingClientRect().width || sidebarWidth;
+			if (!open && sidebar.style.transform.includes('translateX')) {
+				sidebar.style.transform = `translateX(-${w}px)`;
+			}
+			if (open && content) content.style.marginLeft = `${w}px`;
+		});
+	});
+})();
+</script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
