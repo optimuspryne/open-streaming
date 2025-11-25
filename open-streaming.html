@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <script>
 document.addEventListener('DOMContentLoaded', function(){
@@ -214,33 +213,32 @@ document.addEventListener('DOMContentLoaded', function(){
 	  outline-offset: 4px;
 	}
 
+	/* Make service images smaller and enforce 4:3 ratio */
 	.service img {
-	  width: 100%;
-	  height: auto;
-	  aspect-ratio: 2 / 3;
-	  object-fit: cover;
+		width: 160px;
+		max-width: 100%;
+		height: auto;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		border-radius: 6px;
+		margin: 8px 0 0 0;
 	}
-
+	/* Match fallback blocks to the same size/ratio */
 	.fallback-image {
-	  width: 100%;
-	  aspect-ratio: 2 / 3;
-	  background-color: #20335c;
-	  color: white;
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
-	  text-align: center;
-	  font-size: 1.2rem;
-	  font-weight: bold;
-	  padding: 0.5rem;
-	  border-radius: 10px;
-	  box-sizing: border-box;
+		width: 160px;
+		max-width: 100%;
+		aspect-ratio: 4 / 3;
+		height: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem;
+		margin: 8px 0 0 0;
 	}
-
+	/* Reduce label spacing so the smaller images look balanced */
 	.label {
-	  padding: 0.75rem;
-	  font-size: 1.1rem;
-	  color: #161a45;
+		padding: 0.5rem;
+		font-size: 1rem;
 	}
 
 	.delete-btn {
